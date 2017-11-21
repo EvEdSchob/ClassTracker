@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/class_details_layout"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/list_item_class_subj_text_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="@string/class_subj_text_label"/>
+
+        <TextView
+            android:id="@+id/list_item_class_sec_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/list_item_class_subj_text_label"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:text="@string/class_sec_text_label"/>
+
+
+        <TextView
+            android:id="@+id/list_item_class_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/list_item_class_sec_text_view"
+            android:paddingTop="10dp"
+            android:text="@string/class_name_text_label"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_below="@id/class_details_layout"
+        android:id="@+id/list_item_class_days_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/class_days_text_label"/>
+
+    <TextView
+        android:id="@+id/list_item_class_grade_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/class_grade_text_label"
+        android:padding="19dp"
+        android:layout_alignRight="@+id/list_item_class_days_text_view"/>
+
+    <TextView
+        android:id="@+id/list_item_class_time_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/class_time_text_label"
+        android:layout_below="@id/class_details_layout"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:layout_toStartOf="@id/list_item_class_grade_text_view"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/list_item_class_days_text_view"
+        android:background="@android:color/darker_gray"/>
+
+
+</RelativeLayout>

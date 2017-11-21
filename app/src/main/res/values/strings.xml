@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ClassTracker</string>
+
+    <string name="class_name_text_label">Mobile App Development</string>
+    <string name="class_subj_text_label">CIS</string>
+    <string name="class_sec_text_label">298</string>
+    <string name="class_days_text_label">M,W</string>
+    <string name="class_time_text_label">2:30 &#8211; 4:30</string>
+    <string name="class_grade_text_label">N/A</string>
+
+    <string name="assignment_name_text_label">Term Project</string>
+    <string name="assignment_grade_text_label">100 / 150</string>
+    <string name="assignment_grade_label_format_text">%1#d / %2$d</string>
+    <string name="assignment_percent_text_label">66.6%</string>
+    <string name="assignment_percent_format_text">%1$d %</string>
+    
+</resources>
