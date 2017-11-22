@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class ClassListActivity extends FragmentActivity {
 
+    //Initial commit
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
