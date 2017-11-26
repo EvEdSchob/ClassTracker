@@ -1,9 +1,7 @@
 package biz.no_ip.evedschob.classtracker;
 
 import android.content.Context;
-import android.os.SystemClock;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,26 +9,26 @@ import java.util.List;
  * Created by Evan on 11/21/2017.
  */
 
-public class ClassList {
+public class CourseList {
 
-    private static ClassList sClassList;
+    private static CourseList sCourseList;
 
-    private List<Class> mClasses;
+    private List<Course> mCourses;
 
-    public static ClassList get(Context context) {
-        if (sClassList == null) {
-            sClassList = new ClassList(context);
+    public static CourseList get(Context context) {
+        if (sCourseList == null) {
+            sCourseList = new CourseList(context);
         }
-        return sClassList;
+        return sCourseList;
     }
 
-    private ClassList(Context context) {
-        mClasses = new ArrayList<>();
+    private CourseList(Context context) {
+        mCourses = new ArrayList<>();
 
         //Dummy classes to be removed later
         for (int i = 0; i < 5; i++) {
             //Using course because "class" is a reserved word
-            Class course = new Class();
+            Course course = new Course();
 
             int CRN = 12345 + i;
             course.setCRN(String.valueOf(CRN));
@@ -40,7 +38,7 @@ public class ClassList {
             int SEC = 101 + (i * 10);
             course.setSection(String.valueOf(SEC));
 
-            course.setClassName("Mobile App Development");
+            course.setCourseName("Mobile App Development");
 
             Boolean[] days = {true, false, true, false, false, false, false};
             course.setDays(days);
@@ -50,16 +48,16 @@ public class ClassList {
 
     }
 
-    public void addClass(Class c) {
-        mClasses.add(c);
+    public void addClass(Course c) {
+        mCourses.add(c);
     }
 
-    public List<Class> getClasses() {
-        return mClasses;
+    public List<Course> getCourses() {
+        return mCourses;
     }
 
-    public Class getClass(String CRN){
-        for (Class course : mClasses) {
+    public Course getClass(String CRN){
+        for (Course course : mCourses) {
             if (course.getCRN().equals(CRN)){
                 return course;
             }

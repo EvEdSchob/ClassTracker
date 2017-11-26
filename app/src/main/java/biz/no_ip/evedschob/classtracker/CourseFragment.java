@@ -6,6 +6,5 @@ import android.support.v4.app.Fragment;
  * Created by Evan on 11/20/2017.
  */
 
-public class EditClassFragment extends Fragment {
-
+public class CourseFragment extends Fragment {
 }

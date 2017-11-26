@@ -6,12 +6,12 @@ import java.sql.Time;
  * Created by Evan on 11/20/2017.
  */
 
-public class Class {
+public class Course {
 
     private String mCRN;
     private String mSubject;
     private String mSection;
-    private String mClassName;
+    private String mCourseName;
     private Boolean[] mDays;
     private Time mStartTime;
     private Time mEndTime;
@@ -43,12 +43,12 @@ public class Class {
         mSection = section;
     }
 
-    public String getClassName() {
-        return mClassName;
+    public String getCourseName() {
+        return mCourseName;
     }
 
-    public void setClassName(String className) {
-        mClassName = className;
+    public void setCourseName(String courseName) {
+        mCourseName = courseName;
     }
 
     public Boolean[] getDays() {

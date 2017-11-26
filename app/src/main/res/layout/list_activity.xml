@@ -6,4 +6,4 @@
     android:id="@+id/generic_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="biz.no_ip.evedschob.classtracker.ClassListActivity"/>
+    tools:context="biz.no_ip.evedschob.classtracker.CourseListActivity"/>

@@ -1,6 +1,5 @@
 package biz.no_ip.evedschob.classtracker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,7 @@ import java.util.List;
  * Created by Evan on 11/20/2017.
  */
 
-public class ClassListFragment extends Fragment {
+public class CourseListFragment extends Fragment {
 
     private RecyclerView mClassListRecyclerView;
 
@@ -46,12 +45,12 @@ public class ClassListFragment extends Fragment {
     }
 
     private void updateUI() {
-        ClassList classList = ClassList.get(getActivity());
+        CourseList courseList = CourseList.get(getActivity());
 
-        List<Class> classes = classList.getClasses();
+        List<Course> courses = courseList.getCourses();
 
         if (mAdapter == null) {
-            mAdapter = new ClassAdapter(classes);
+            mAdapter = new ClassAdapter(courses);
 
             mClassListRecyclerView.setAdapter(mAdapter);
         } else {
@@ -65,14 +64,14 @@ public class ClassListFragment extends Fragment {
 
     private class ClassHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
-        private Class mClass;
+        private Course mCourse;
 
-        //Class Details TextViews
+        //Course Details TextViews
         private TextView mClassSubjTextView;
         private TextView mClassSecTextView;
         private TextView mClassNameTextView;
 
-        //Class Schedule TextViews
+        //Course Schedule TextViews
         private TextView mClassDaysTextView;
         private TextView mClassTimeTextView;
 
@@ -104,16 +103,16 @@ public class ClassListFragment extends Fragment {
         }
 
         //Using course because "class" is a reserved word.
-        public void bindClass(Class course) {
-            mClass = course;
-            mClassSubjTextView.setText(mClass.getSubject());
-            mClassSecTextView.setText(mClass.getSection());
-            mClassNameTextView.setText(mClass.getClassName());
+        public void bindClass(Course course) {
+            mCourse = course;
+            mClassSubjTextView.setText(mCourse.getSubject());
+            mClassSecTextView.setText(mCourse.getSection());
+            mClassNameTextView.setText(mCourse.getCourseName());
 
-            mClassDaysTextView.setText(mClass.getDaysAsString());
+            mClassDaysTextView.setText(mCourse.getDaysAsString());
 
             String TimeString = getString(R.string.class_time_format,
-                    mClass.getStartTimeAsString(), mClass.getEndTimeAsString());
+                    mCourse.getStartTimeAsString(), mCourse.getEndTimeAsString());
             mClassTimeTextView.setText(TimeString);
 
             //REPLACE THIS!!!!!!!!!!!!!!!
@@ -130,10 +129,10 @@ public class ClassListFragment extends Fragment {
     }
 
     private class ClassAdapter extends RecyclerView.Adapter<ClassHolder> {
-        private List<Class> mClasses;
+        private List<Course> mCourses;
 
-        public ClassAdapter(List<Class> classes){
-            mClasses = classes;
+        public ClassAdapter(List<Course> courses){
+            mCourses = courses;
         }
 
         @Override
@@ -147,14 +146,14 @@ public class ClassListFragment extends Fragment {
         @Override
         public void onBindViewHolder(ClassHolder holder, int position) {
             //Using course because "class" is a reserved word.
-            Class course = mClasses.get(position);
+            Course course = mCourses.get(position);
 
             holder.bindClass(course);
         }
 
         @Override
         public int getItemCount() {
-            return mClasses.size();
+            return mCourses.size();
         }
     }
 }

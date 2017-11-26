@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ClassTracker</string>
 
-    <!--Sample Class Data-->
+    <!--Sample Course Data-->
     <string name="class_name_text_label">Mobile App Development</string>
     <string name="class_subj_text_label">CIS</string>
     <string name="class_sec_text_label">298</string>
