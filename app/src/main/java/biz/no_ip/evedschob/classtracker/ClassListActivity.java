@@ -1,14 +1,10 @@
 package biz.no_ip.evedschob.classtracker;
 
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
-public class ClassListActivity extends FragmentActivity {
-
-    //Initial commit
+public class ClassListActivity extends SingleFragmentActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_activity);
+    protected Fragment createFragment() {
+        return new ClassListFragment();
     }
 }

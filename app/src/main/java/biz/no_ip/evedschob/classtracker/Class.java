@@ -16,6 +16,8 @@ public class Class {
     private Time mStartTime;
     private Time mEndTime;
 
+    private double mGrade;
+
 
     public String getCRN() {
         return mCRN;
@@ -53,12 +55,33 @@ public class Class {
         return mDays;
     }
 
+    public String getDaysAsString() {
+        String outputString = "";
+
+        if(mDays[0]){outputString += "M, ";}
+        if(mDays[1]){outputString += "T, ";}
+        if(mDays[2]){outputString += "W, ";}
+        if(mDays[3]){outputString += "R, ";}
+        if(mDays[4]){outputString += "F, ";}
+        if(mDays[5]){outputString += "S, ";}
+        if(mDays[6]){outputString += "U, ";}
+
+        return outputString;
+    }
+
     public void setDays(Boolean[] days) {
         mDays = days;
     }
 
     public Time getStartTime() {
         return mStartTime;
+    }
+
+    public String getStartTimeAsString() {
+
+        //To be replaced with proper time to string conversion
+        //at a later time
+        return "2:35";
     }
 
     public void setStartTime(Time startTime) {
@@ -69,7 +92,23 @@ public class Class {
         return mEndTime;
     }
 
+    public String getEndTimeAsString(){
+
+        //To be replaced with proper time to string conversion
+        //at a later time
+        return "4:35";
+    }
+
     public void setEndTime(Time endTime) {
         mEndTime = endTime;
+    }
+
+
+    public double getGrade() {
+        return mGrade;
+    }
+
+    public void setGrade(double grade) {
+        mGrade = grade;
     }
 }
