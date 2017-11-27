@@ -25,30 +25,24 @@ public class CourseList {
     private CourseList(Context context) {
         mCourses = new ArrayList<>();
 
-        //Dummy classes to be removed later
+        //Dummy courses to be removed later
         for (int i = 0; i < 5; i++) {
-            //Using course because "class" is a reserved word
-            Course course = new Course();
-
             int CRN = 12345 + i;
-            course.setCRN(String.valueOf(CRN));
-
-            course.setSubject("CIS");
-
+            String SUBJ = "MATH";
             int SEC = 101 + (i * 10);
-            course.setSection(String.valueOf(SEC));
+            int Num = i + 1;
+            String courseName = "Calculus " + String.valueOf(Num);
+            boolean[] days = {false, true, false, true, false, false, false};
 
-            course.setCourseName("Mobile App Development");
-
-            Boolean[] days = {true, false, true, false, false, false, false};
-            course.setDays(days);
-
-            course.setGrade(3.5);
+            Course course = new Course(String.valueOf(CRN), SUBJ,
+                    String.valueOf(SEC), courseName, days);
+            addCourse(course);
         }
+        //End of Dummy data
 
     }
 
-    public void addClass(Course c) {
+    public void addCourse(Course c) {
         mCourses.add(c);
     }
 

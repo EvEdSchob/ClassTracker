@@ -11,8 +11,21 @@ import java.util.UUID;
 public class AssignmentList {
     private List<Assignment> mAssignments;
 
+    private double mTotalPointsEarned;
+    private double mTotalPointsPossible;
+    private double mCoursePercentage;
+
     public AssignmentList(){
         mAssignments = new ArrayList<>();
+    }
+
+    public void addAssignment(Assignment assignment){
+        mAssignments.add(assignment);
+
+        mTotalPointsEarned += assignment.getPointsEarned();
+        mTotalPointsPossible += assignment.getPointsPossible();
+
+        mCoursePercentage = (mTotalPointsEarned/mTotalPointsPossible)*100;
 
     }
 
@@ -29,4 +42,7 @@ public class AssignmentList {
         return null;
     }
 
+    public double getCoursePercentage() {
+        return mCoursePercentage;
+    }
 }

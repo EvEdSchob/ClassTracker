@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CourseListFragment extends Fragment {
 
-    private RecyclerView mClassListRecyclerView;
+    private RecyclerView mCourseListRecyclerView;
 
     private ClassAdapter mAdapter;
 
@@ -28,9 +28,9 @@ public class CourseListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.list_activity, container, false);
 
-        mClassListRecyclerView = (RecyclerView) view.findViewById(R.id.generic_recycler_view);
+        mCourseListRecyclerView = (RecyclerView) view.findViewById(R.id.generic_recycler_view);
 
-        mClassListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mCourseListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         updateUI();
@@ -52,7 +52,7 @@ public class CourseListFragment extends Fragment {
         if (mAdapter == null) {
             mAdapter = new ClassAdapter(courses);
 
-            mClassListRecyclerView.setAdapter(mAdapter);
+            mCourseListRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
         }
@@ -62,7 +62,7 @@ public class CourseListFragment extends Fragment {
     //Inner classes
     //*****************************
 
-    private class ClassHolder extends RecyclerView.ViewHolder
+    private class CourseHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         private Course mCourse;
 
@@ -78,7 +78,7 @@ public class CourseListFragment extends Fragment {
         //Grade TextView
         private TextView mClassGradeTextView;
 
-        public ClassHolder(View itemView) {
+        public CourseHolder(View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(this);
@@ -115,11 +115,7 @@ public class CourseListFragment extends Fragment {
                     mCourse.getStartTimeAsString(), mCourse.getEndTimeAsString());
             mClassTimeTextView.setText(TimeString);
 
-            //REPLACE THIS!!!!!!!!!!!!!!!
-            //Replace the static string resource with functionality
-            //in the class to calculate the overall grade based on the
-            //assignments in the AssignmentList
-            mClassGradeTextView.setText(R.string.class_grade_text_label);
+            mClassGradeTextView.setText(String.valueOf(mCourse.getGrade()));
         }
 
         @Override
@@ -128,7 +124,7 @@ public class CourseListFragment extends Fragment {
         }
     }
 
-    private class ClassAdapter extends RecyclerView.Adapter<ClassHolder> {
+    private class ClassAdapter extends RecyclerView.Adapter<CourseHolder> {
         private List<Course> mCourses;
 
         public ClassAdapter(List<Course> courses){
@@ -136,15 +132,15 @@ public class CourseListFragment extends Fragment {
         }
 
         @Override
-        public ClassHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public CourseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
             View view = layoutInflater.inflate(R.layout.list_item_class, parent, false);
-            return new ClassHolder(view);
+            return new CourseHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ClassHolder holder, int position) {
+        public void onBindViewHolder(CourseHolder holder, int position) {
             //Using course because "class" is a reserved word.
             Course course = mCourses.get(position);
 
