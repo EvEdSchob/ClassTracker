@@ -16,7 +16,7 @@
 
     <!--Formatting strings-->
     <string name="class_time_format">%1$s &#8211; %2$s</string>
-    <string name="assignment_grade_label_format_text">%1$d / %2$d</string>
-    <string name="assignment_percent_format_text">%1$d %</string>
+    <string name="assignment_score_label_format_text">%1$.0f / %2$.0f</string>
+    <string name="assignment_percent_format_text">%.1f %%</string>
     
 </resources>

@@ -1,5 +1,6 @@
 package biz.no_ip.evedschob.classtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ public class CourseListFragment extends Fragment {
     private RecyclerView mCourseListRecyclerView;
 
     private ClassAdapter mAdapter;
+    
 
     @Nullable
     @Override
@@ -85,7 +87,7 @@ public class CourseListFragment extends Fragment {
 
             //Wire up the class detail widgets
             mClassSubjTextView = (TextView)
-                    itemView.findViewById(R.id.list_item_class_subj_text_label);
+                    itemView.findViewById(R.id.list_item_class_subj_text_view);
             mClassSecTextView = (TextView)
                     itemView.findViewById(R.id.list_item_class_sec_text_view);
             mClassNameTextView = (TextView)
@@ -102,8 +104,7 @@ public class CourseListFragment extends Fragment {
                     itemView.findViewById(R.id.list_item_class_grade_text_view);
         }
 
-        //Using course because "class" is a reserved word.
-        public void bindClass(Course course) {
+        public void bindCourse(Course course) {
             mCourse = course;
             mClassSubjTextView.setText(mCourse.getSubject());
             mClassSecTextView.setText(mCourse.getSection());
@@ -120,7 +121,8 @@ public class CourseListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            //Do nothing for now
+            Intent intent = CourseActivity.newIntent(getActivity(), mCourse.getCRN());
+            startActivity(intent);
         }
     }
 
@@ -144,7 +146,7 @@ public class CourseListFragment extends Fragment {
             //Using course because "class" is a reserved word.
             Course course = mCourses.get(position);
 
-            holder.bindClass(course);
+            holder.bindCourse(course);
         }
 
         @Override

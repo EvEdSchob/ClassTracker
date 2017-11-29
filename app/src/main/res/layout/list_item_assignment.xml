@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/assignment_name_text_view"
+        android:id="@+id/list_item_assignment_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
+        android:padding="8dp"
         android:text="@string/assignment_name_text_label"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/assignment_percent_text_view"
+    <LinearLayout
+        android:id="@+id/list_item_assignment_grade_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_alignParentEnd="true"
-        android:text="@string/assignment_percent_text_label"
-        android:textSize="20sp"/>
+        android:paddingEnd="5dp">
 
-    <TextView
-        android:id="@+id/assignment_grade_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/assignment_percent_text_view"
-        android:text="@string/assignment_grade_text_label"/>
+        <TextView
+            android:id="@+id/list_item_assignment_percent_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/assignment_percent_text_label"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/list_item_assignment_score_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/assignment_grade_text_label"/>
+    </LinearLayout>
+
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/assignment_grade_text_view"
+        android:layout_below="@+id/list_item_assignment_grade_layout"
         android:background="@android:color/darker_gray"/>
 
 </RelativeLayout>

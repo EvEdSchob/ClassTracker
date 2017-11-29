@@ -1,5 +1,8 @@
 package biz.no_ip.evedschob.classtracker;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -8,12 +11,13 @@ import java.util.UUID;
  * Created by Evan on 11/21/2017.
  */
 
-public class AssignmentList {
+public class AssignmentList{
     private List<Assignment> mAssignments;
 
     private double mTotalPointsEarned;
     private double mTotalPointsPossible;
     private double mCoursePercentage;
+
 
     public AssignmentList(){
         mAssignments = new ArrayList<>();
@@ -45,4 +49,6 @@ public class AssignmentList {
     public double getCoursePercentage() {
         return mCoursePercentage;
     }
+
+
 }

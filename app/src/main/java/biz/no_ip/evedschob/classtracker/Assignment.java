@@ -24,7 +24,7 @@ public class Assignment {
     }
 
     private double CalcPercent(double earned, double possible){
-        double percentage = earned/ possible;
+        double percentage = (earned/ possible)*100;
         return percentage;
     }
 

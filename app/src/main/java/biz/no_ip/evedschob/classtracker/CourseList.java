@@ -50,7 +50,7 @@ public class CourseList {
         return mCourses;
     }
 
-    public Course getClass(String CRN){
+    public Course getCourse(String CRN){
         for (Course course : mCourses) {
             if (course.getCRN().equals(CRN)){
                 return course;
