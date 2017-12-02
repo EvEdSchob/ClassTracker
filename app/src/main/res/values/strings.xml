@@ -18,5 +18,13 @@
     <string name="class_time_format">%1$s &#8211; %2$s</string>
     <string name="assignment_score_label_format_text">%1$.0f / %2$.0f</string>
     <string name="assignment_percent_format_text">%.1f %%</string>
+
+    <!--Assignment Hints/Label Strings-->
+    <string name="assignment_name_edit_text_hint">Assignment Name:</string>
+    <string name="assignment_points_earned_edit_text_hint">Points Earned:</string>
+    <string name="assignment_points_possible_edit_text_hint">Points Possible:</string>
+
+    <!--Course Hints/Label Strings-->
+
     
 </resources>

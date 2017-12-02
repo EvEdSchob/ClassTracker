@@ -72,9 +72,7 @@ public class CourseFragment extends Fragment {
     }
 
     private void updateUI() {
-        AssignmentList assignmentList = mCourse.getAssignmentList();
-
-        List<Assignment> assignments = assignmentList.getAssignments();
+        List<Assignment> assignments = mCourse.getAssignmentList();
 
         if (mAdapter == null) {
             mAdapter = new AssignmentAdapter(assignments);

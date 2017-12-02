@@ -1,6 +1,9 @@
 package biz.no_ip.evedschob.classtracker;
 
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Evan on 11/20/2017.
@@ -20,7 +23,7 @@ public class Course {
 
     private AssignmentList mAssignmentList = new AssignmentList();
 
-    public Course(String crn, String sub, String sec, String name, boolean[] days){
+    public Course(String crn, String sub, String sec, String name, boolean[] days) {
         mCRN = crn;
         mSubject = sub;
         mSection = sec;
@@ -38,33 +41,66 @@ public class Course {
         mGrade = calculateGrade(mAssignmentList.getCoursePercentage());
     }
 
-    public void addAssignment(Assignment assignment){
+    //*****************************
+    //Private Methods
+    //*****************************
+
+    private double calculateGrade(double percent) {
+        if (percent >= 90) {mGrade = 4.0;
+        } else if (percent >= 85) {mGrade = 3.5;
+        } else if (percent >= 80) {mGrade = 3.0;
+        } else if (percent >= 75) {mGrade = 2.5;
+        } else if (percent >= 70) {mGrade = 2.0;
+        } else if (percent >= 65) {mGrade = 1.5;
+        } else if (percent >= 60) {mGrade = 1.0;
+        } else {mGrade = 0.0;
+        }return mGrade;
+    }
+
+    //*****************************
+    //Public Methods
+    //*****************************
+
+    public void addAssignment(Assignment assignment) {
         mAssignmentList.addAssignment(assignment);
         calculateGrade(mAssignmentList.getCoursePercentage());
     }
 
-    private double calculateGrade(double percent){
-        if(percent >= 90){
-            mGrade = 4.0;
-        } else if (percent >= 85){
-            mGrade = 3.5;
-        } else if (percent >= 80){
-            mGrade = 3.0;
-        } else if (percent >= 75){
-            mGrade = 2.5;
-        } else if (percent >= 70){
-            mGrade = 2.0;
-        } else if (percent >= 65){
-            mGrade = 1.5;
-        } else if (percent >= 60){
-            mGrade = 1.0;
-        } else {
-            mGrade = 0.0;
-        }
-
-        return mGrade;
+    public Assignment getAssignment(UUID id){
+        return mAssignmentList.getAssignment(id);
     }
 
+    public List<Assignment> getAssignmentList() {
+        return mAssignmentList.getAssignments();
+    }
+
+    public String getDaysAsString() {
+        String outputString = "";
+        if (mDays[0]) {outputString += "M, ";
+        }if (mDays[1]) {outputString += "T, ";
+        }if (mDays[2]) {outputString += "W, ";
+        }if (mDays[3]) {outputString += "R, ";
+        }if (mDays[4]) {outputString += "F, ";
+        }if (mDays[5]) {outputString += "S, ";
+        }if (mDays[6]) {outputString += "U, ";}
+        return outputString;
+    }
+
+    public String getStartTimeAsString() {
+        //To be replaced with proper time to string conversion
+        //at a later time // TODO: 11/26/2017
+        return "6:00";
+    }
+
+    public String getEndTimeAsString() {
+        //To be replaced with proper time to string conversion
+        //at a later time
+        return "8:30";
+    }
+
+    //*****************************
+    //Getters & Setters
+    //*****************************
 
     public String getCRN() {
         return mCRN;
@@ -86,30 +122,8 @@ public class Course {
         return mDays;
     }
 
-    public String getDaysAsString() {
-        String outputString = "";
-
-        if(mDays[0]){outputString += "M, ";}
-        if(mDays[1]){outputString += "T, ";}
-        if(mDays[2]){outputString += "W, ";}
-        if(mDays[3]){outputString += "R, ";}
-        if(mDays[4]){outputString += "F, ";}
-        if(mDays[5]){outputString += "S, ";}
-        if(mDays[6]){outputString += "U, ";}
-
-        return outputString;
-    }
-
-
     public Time getStartTime() {
         return mStartTime;
-    }
-
-    public String getStartTimeAsString() {
-        
-        //To be replaced with proper time to string conversion
-        //at a later time // TODO: 11/26/2017
-        return "6:00";
     }
 
     public void setStartTime(Time startTime) {
@@ -120,23 +134,55 @@ public class Course {
         return mEndTime;
     }
 
-    public String getEndTimeAsString(){
-
-        //To be replaced with proper time to string conversion
-        //at a later time
-        return "8:30";
-    }
-
     public void setEndTime(Time endTime) {
         mEndTime = endTime;
     }
-
 
     public double getGrade() {
         return mGrade;
     }
 
-    public AssignmentList getAssignmentList() {
-        return mAssignmentList;
+
+    //*****************************
+    //Inner class
+    //*****************************
+    private class AssignmentList {
+        private List<Assignment> mAssignments;
+
+        private double mTotalPointsEarned;
+        private double mTotalPointsPossible;
+        private double mCoursePercentage;
+
+
+        private AssignmentList() {
+            mAssignments = new ArrayList<>();
+        }
+
+        private void addAssignment(Assignment assignment) {
+            mAssignments.add(assignment);
+
+            mTotalPointsEarned += assignment.getPointsEarned();
+            mTotalPointsPossible += assignment.getPointsPossible();
+
+            mCoursePercentage = (mTotalPointsEarned / mTotalPointsPossible) * 100;
+
+        }
+
+        private List<Assignment> getAssignments() {
+            return mAssignments;
+        }
+
+        private Assignment getAssignment(UUID id) {
+            for (Assignment assignment : mAssignments) {
+                if (assignment.getAssignmentId().equals(id)) {
+                    return assignment;
+                }
+            }
+            return null;
+        }
+
+        private double getCoursePercentage() {
+            return mCoursePercentage;
+        }
     }
 }

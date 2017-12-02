@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 
 public class CourseActivity extends SingleFragmentActivity {
     private static final String EXTRA_COURSE_ID =
-            "biz.no_ip.evedschob.classtracker.course_ic";
+            "biz.no_ip.evedschob.classtracker.course_id";
 
     public static Intent newIntent(Context packageContext, String CRN){
         Intent intent = new Intent(packageContext, CourseActivity.class);
