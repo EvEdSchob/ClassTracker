@@ -60,6 +60,10 @@ public class Course {
     //*****************************
     //Public Methods
     //*****************************
+    public void updateCourse(){
+        mAssignmentList.updateAssignmentList();
+        mGrade = calculateGrade(mAssignmentList.getCoursePercentage());
+    }
 
     public void addAssignment(Assignment assignment) {
         mAssignmentList.addAssignment(assignment);
@@ -179,6 +183,19 @@ public class Course {
                 }
             }
             return null;
+        }
+
+        private void updateAssignmentList(){
+            //Reset point totals
+            mTotalPointsEarned = 0;
+            mTotalPointsPossible = 0;
+            //Recalculate point totals
+            for (Assignment assignment: mAssignments) {
+                mTotalPointsEarned += assignment.getPointsEarned();
+                mTotalPointsPossible += assignment.getPointsPossible();
+            }
+            //Recalculate coursePercentage
+            mCoursePercentage = (mTotalPointsEarned / mTotalPointsPossible) * 100;
         }
 
         private double getCoursePercentage() {

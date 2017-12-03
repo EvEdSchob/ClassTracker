@@ -1,6 +1,7 @@
 package biz.no_ip.evedschob.classtracker;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,11 +9,15 @@ import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Evan on 11/20/2017.
@@ -44,6 +49,7 @@ public class CourseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String CRN = (String) getArguments().getString(ARG_COURSE_ID);
+        setHasOptionsMenu(true);
 
         mCourse = CourseList.get(getActivity()).getCourse(CRN);
         getActivity().setTitle(mCourse.getCourseName());
@@ -69,6 +75,21 @@ public class CourseFragment extends Fragment {
         super.onResume();
         updateUI();
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.assignment_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = EditAssignmentActivity.newIntent(getActivity(),
+                mCourse.getCRN(), null);
+        startActivity(intent);
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateUI() {
@@ -132,8 +153,13 @@ public class CourseFragment extends Fragment {
         public void onClick(View view) {
             //Do nothing yet
             //Will eventually open editable assignment details.
+            Intent intent = EditAssignmentActivity.newIntent(getActivity(),
+                    mCourse.getCRN(), mAssignment.getAssignmentId());
+            startActivity(intent);
         }
     }
+
+
 
     private class AssignmentAdapter extends RecyclerView.Adapter<AssignmentHolder> {
         private List<Assignment> mAssignmentList;

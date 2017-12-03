@@ -19,6 +19,8 @@
         <activity android:name=".CourseActivity"
                   android:parentActivityName=".CourseListActivity">
         </activity>
+        <activity android:name=".EditAssignmentActivity">
+        </activity>
     </application>
 
 </manifest>

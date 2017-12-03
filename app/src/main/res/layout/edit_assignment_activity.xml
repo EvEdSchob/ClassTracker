@@ -24,5 +24,11 @@
         android:hint="@string/assignment_points_possible_edit_text_hint"
         android:layout_below="@id/assignment_points_earned_edit_text"
         android:inputType="numberDecimal"/>
+
+    <Button
+        android:id="@+id/universal_assignment_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/assignment_points_possible_edit_text"/>
     
 </RelativeLayout>

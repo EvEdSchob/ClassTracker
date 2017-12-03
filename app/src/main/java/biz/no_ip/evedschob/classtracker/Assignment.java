@@ -14,7 +14,7 @@ public class Assignment {
     private double mPointsPossible;
     private double mPercentage;
 
-    public Assignment(String assignmentName, int pointsEarned, int pointsPossible) {
+    public Assignment(String assignmentName, double pointsEarned, double pointsPossible) {
         mAssignmentId = UUID.randomUUID();
         mAssignmentName = assignmentName;
         mPointsEarned = pointsEarned;
@@ -48,4 +48,17 @@ public class Assignment {
         return mPercentage;
     }
 
+    public void setAssignmentName(String assignmentName) {
+        mAssignmentName = assignmentName;
+    }
+
+    public void setPointsEarned(double pointsEarned) {
+        mPointsEarned = pointsEarned;
+        mPercentage = CalcPercent(mPointsEarned, mPointsPossible);
+    }
+
+    public void setPointsPossible(double pointsPossible) {
+        mPointsPossible = pointsPossible;
+        mPercentage = CalcPercent(mPointsEarned, mPointsPossible);
+    }
 }
