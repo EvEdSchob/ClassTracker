@@ -85,8 +85,7 @@ public class Course {
         }if (mDays[2]) {outputString += "W, ";
         }if (mDays[3]) {outputString += "R, ";
         }if (mDays[4]) {outputString += "F, ";
-        }if (mDays[5]) {outputString += "S, ";
-        }if (mDays[6]) {outputString += "U, ";}
+        }if (mDays[5]) {outputString += "S, ";}
         return outputString;
     }
 
@@ -146,6 +145,25 @@ public class Course {
         return mGrade;
     }
 
+    public void setCRN(String CRN) {
+        mCRN = CRN;
+    }
+
+    public void setSubject(String subject) {
+        mSubject = subject;
+    }
+
+    public void setSection(String section) {
+        mSection = section;
+    }
+
+    public void setCourseName(String courseName) {
+        mCourseName = courseName;
+    }
+
+    public void setDays(boolean[] days) {
+        mDays = days;
+    }
 
     //*****************************
     //Inner class

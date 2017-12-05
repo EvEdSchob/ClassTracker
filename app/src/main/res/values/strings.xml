@@ -35,5 +35,7 @@
     <string name="create_course_button_text">Add Course</string>
     <string name="edit_course_button_text">Update Course</string>
     <string name="delete_course_button_text">Delete Course</string>
+
+    <string name="delete_confirmation_string">Are you sure you want to delete %1$s?</string>
     
 </resources>

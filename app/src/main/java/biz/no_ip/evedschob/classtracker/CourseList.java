@@ -32,7 +32,7 @@ public class CourseList {
             int SEC = 101 + (i * 10);
             int Num = i + 1;
             String courseName = "Calculus " + String.valueOf(Num);
-            boolean[] days = {false, true, false, true, false, false, false};
+            boolean[] days = {false, true, false, true, false, false};
 
             Course course = new Course(String.valueOf(CRN), SUBJ,
                     String.valueOf(SEC), courseName, days);
@@ -47,11 +47,7 @@ public class CourseList {
     }
 
     public void removeCourse (Course c){
-        for (Course course: mCourses) {
-            if(course.equals(c)){
-                mCourses.remove(c);
-            }
-        }
+        mCourses.remove(c);
     }
 
     public List<Course> getCourses() {

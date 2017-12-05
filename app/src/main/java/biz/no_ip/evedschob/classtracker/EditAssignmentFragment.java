@@ -1,8 +1,10 @@
 package biz.no_ip.evedschob.classtracker;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -99,6 +101,38 @@ public class EditAssignmentFragment extends Fragment {
                     }
                 }
             });
+            //Delete Button to be completed later.
+            //There are still methods to be added to ensure that this works
+            //TODO
+//            mDeleteButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    //Do nothing for now
+//                    //Will eventually remove the current course from
+//                    //the array list.
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                    String alertString = getString(R.string.delete_confirmation_string,
+//                            mAssignment.getAssignmentName());
+//                    builder.setTitle(alertString);
+//                    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            mCourse.removeAssignment(mAssignment);
+//                            dialogInterface.dismiss();
+//                            EditAssignmentFragment.this.getActivity().finish();
+//                        }
+//                    });
+//                    builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            //Do nothing and close dialog
+//                            dialogInterface.dismiss();
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                }
+//            });
         //If there is no assignment:
         } else {
             //Leave the text views with their default hints.

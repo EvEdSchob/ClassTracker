@@ -32,15 +32,12 @@
 
 
     <LinearLayout
-        android:id="@+id/course_days_checkbox_group"
+        android:id="@+id/checkboxes_row1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/course_id_edit_text">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mon"/>
+        android:layout_below="@+id/course_id_edit_text"
+        android:gravity="center">
         <CheckBox
             android:id="@+id/course_checkbox_monday"
             android:layout_width="wrap_content"
@@ -48,7 +45,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tue"/>
+            android:text="Mon"/>
+
         <CheckBox
             android:id="@+id/course_checkbox_tuesday"
             android:layout_width="wrap_content"
@@ -56,7 +54,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wed"/>
+            android:text="Tue"/>
+
         <CheckBox
             android:id="@+id/course_checkbox_wednesday"
             android:layout_width="wrap_content"
@@ -64,7 +63,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thu"/>
+            android:text="Wed"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/checkboxes_row2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkboxes_row1"
+        android:gravity="center">
         <CheckBox
             android:id="@+id/course_checkbox_thursday"
             android:layout_width="wrap_content"
@@ -72,7 +80,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fri"/>
+            android:text="Thu"/>
+
         <CheckBox
             android:id="@+id/course_checkbox_friday"
             android:layout_width="wrap_content"
@@ -80,7 +89,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sat"/>
+            android:text="Fri"/>
+
         <CheckBox
             android:id="@+id/course_checkbox_saturday"
             android:layout_width="wrap_content"
@@ -88,18 +98,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sun"/>
-        <CheckBox
-            android:id="@+id/course_checkbox_sunday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="Sat"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/universal_course_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/course_days_checkbox_group"/>
+        android:layout_below="@id/checkboxes_row2"/>
     <Button
         android:id="@+id/course_delete_button"
         android:layout_width="match_parent"
