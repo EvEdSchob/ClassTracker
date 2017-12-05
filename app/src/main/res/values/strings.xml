@@ -25,8 +25,15 @@
     <string name="assignment_points_possible_edit_text_hint">Points Possible:</string>
     <string name="create_assignment_button_text">Add Assignment</string>
     <string name="edit_assignment_button_text">Update Assignment</string>
+    <string name="delete_assignment_button_text">Delete Assignment</string>
 
     <!--Course Edit Strings-->
-
+    <string name="course_name_edit_text_hint">Course Name:</string>
+    <string name="course_subj_edit_text_hint">Subject:</string>
+    <string name="course_sect_edit_text_hint">Section:</string>
+    <string name="course_id_edit_text_hint">Course ID/CRN:</string>
+    <string name="create_course_button_text">Add Course</string>
+    <string name="edit_course_button_text">Update Course</string>
+    <string name="delete_course_button_text">Delete Course</string>
     
 </resources>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -163,6 +164,7 @@ public class CourseFragment extends Fragment {
 
     private class AssignmentAdapter extends RecyclerView.Adapter<AssignmentHolder> {
         private List<Assignment> mAssignmentList;
+
 
         public AssignmentAdapter(List<Assignment> assignmentList) {
             mAssignmentList = assignmentList;

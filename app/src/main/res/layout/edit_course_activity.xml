@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/course_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course_name_edit_text_hint"/>
+
+    <EditText
+        android:id="@+id/course_subj_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course_subj_edit_text_hint"
+        android:layout_below="@+id/course_name_edit_text"/>
+
+    <EditText
+        android:id="@+id/course_sect_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course_sect_edit_text_hint"
+        android:layout_below="@id/course_subj_edit_text"/>
+
+    <EditText
+        android:id="@+id/course_id_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/course_id_edit_text_hint"
+        android:layout_below="@+id/course_sect_edit_text"/>
+
+
+    <LinearLayout
+        android:id="@+id/course_days_checkbox_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/course_id_edit_text">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mon"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tue"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wed"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thu"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fri"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sat"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sun"/>
+        <CheckBox
+            android:id="@+id/course_checkbox_sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/universal_course_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/course_days_checkbox_group"/>
+    <Button
+        android:id="@+id/course_delete_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/universal_course_button"
+        android:text="@string/delete_course_button_text"/>
+
+</RelativeLayout>

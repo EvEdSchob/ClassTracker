@@ -46,6 +46,14 @@ public class CourseList {
         mCourses.add(c);
     }
 
+    public void removeCourse (Course c){
+        for (Course course: mCourses) {
+            if(course.equals(c)){
+                mCourses.remove(c);
+            }
+        }
+    }
+
     public List<Course> getCourses() {
         return mCourses;
     }

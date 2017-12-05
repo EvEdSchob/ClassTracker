@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".EditAssignmentActivity">
         </activity>
+        <activity android:name=".EditCourseActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -76,7 +76,7 @@ public class EditAssignmentFragment extends Fragment {
             mPointsEarnedField.setText(String.valueOf(mAssignment.getPointsEarned()));
             mPointsPossibleField.setText(String.valueOf(mAssignment.getPointsPossible()));
 
-            //Set the text of the universal button "Edit Assignment"
+            //Set the text of the universal button "Update Assignment"
             mAssignmentButton.setText(R.string.edit_assignment_button_text);
             mAssignmentButton.setOnClickListener(new View.OnClickListener() {
                 //When the universal button is clicked

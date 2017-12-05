@@ -22,7 +22,7 @@ public class CourseListFragment extends Fragment {
     private RecyclerView mCourseListRecyclerView;
 
     private ClassAdapter mAdapter;
-    
+
 
     @Nullable
     @Override
@@ -65,7 +65,7 @@ public class CourseListFragment extends Fragment {
     //*****************************
 
     private class CourseHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+            implements View.OnClickListener, View.OnLongClickListener {
         private Course mCourse;
 
         //Course Details TextViews
@@ -84,6 +84,7 @@ public class CourseListFragment extends Fragment {
             super(itemView);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
 
             //Wire up the class detail widgets
             mClassSubjTextView = (TextView)
@@ -123,6 +124,15 @@ public class CourseListFragment extends Fragment {
         public void onClick(View view) {
             Intent intent = CourseActivity.newIntent(getActivity(), mCourse.getCRN());
             startActivity(intent);
+        }
+
+
+        //Long click to edit course
+        @Override
+        public boolean onLongClick(View view) {
+            Intent intent = EditCourseActivity.newIntent(getActivity(), mCourse.getCRN());
+            startActivity(intent);
+            return true;
         }
     }
 
