@@ -70,6 +70,11 @@ public class Course {
         calculateGrade(mAssignmentList.getCoursePercentage());
     }
 
+    public void removeAssignment(Assignment assignment){
+        mAssignmentList.removeAssignment(assignment);
+        calculateGrade(mAssignmentList.getCoursePercentage());
+    }
+
     public Assignment getAssignment(UUID id){
         return mAssignmentList.getAssignment(id);
     }
@@ -90,14 +95,14 @@ public class Course {
     }
 
     public String getStartTimeAsString() {
-        //To be replaced with proper time to string conversion
-        //at a later time // TODO: 11/26/2017
+        //TODO: Add methods to get the real start time
+        //getStartTime().toString();
         return "6:00";
     }
 
     public String getEndTimeAsString() {
-        //To be replaced with proper time to string conversion
-        //at a later time
+        //TODO: Add methods to get the real end time
+        //getEndTime().toString();
         return "8:30";
     }
 
@@ -188,6 +193,15 @@ public class Course {
 
             mCoursePercentage = (mTotalPointsEarned / mTotalPointsPossible) * 100;
 
+        }
+
+        private void removeAssignment(Assignment assignment){
+            mTotalPointsEarned -= assignment.getPointsEarned();
+            mTotalPointsPossible -= assignment.getPointsPossible();
+
+            mCoursePercentage = (mTotalPointsEarned / mTotalPointsPossible) * 100;
+
+            mAssignments.remove(assignment);
         }
 
         private List<Assignment> getAssignments() {

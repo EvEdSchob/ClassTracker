@@ -143,14 +143,14 @@ public class CourseListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
+            //On standard click, open the CourseActivity
             Intent intent = CourseActivity.newIntent(getActivity(), mCourse.getCRN());
             startActivity(intent);
         }
 
-
-        //Long click to edit course
         @Override
         public boolean onLongClick(View view) {
+            //On long click, open the EditAssignmentActivity
             Intent intent = EditCourseActivity.newIntent(getActivity(), mCourse.getCRN());
             startActivity(intent);
             return true;
@@ -174,9 +174,7 @@ public class CourseListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CourseHolder holder, int position) {
-            //Using course because "class" is a reserved word.
             Course course = mCourses.get(position);
-
             holder.bindCourse(course);
         }
 

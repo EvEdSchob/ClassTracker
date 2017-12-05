@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +42,9 @@ public class EditAssignmentFragment extends Fragment {
     private EditText mAssignmentNameField;
     private EditText mPointsEarnedField;
     private EditText mPointsPossibleField;
+
     private Button mAssignmentButton;
+    private Button mDeleteButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class EditAssignmentFragment extends Fragment {
         UUID assignmentId = (UUID) getArguments().getSerializable(ARG_ASSIGNMENT_ID);
 
         mCourse = CourseList.get(getActivity()).getCourse(courseId);
+        getActivity().setTitle(mCourse.getCourseName());
         if (assignmentId != null) {
             mAssignment = mCourse.getAssignment(assignmentId);
         }
@@ -69,7 +70,10 @@ public class EditAssignmentFragment extends Fragment {
         mAssignmentNameField = (EditText) view.findViewById(R.id.assignment_name_edit_text);
         mPointsEarnedField = (EditText) view.findViewById(R.id.assignment_points_earned_edit_text);
         mPointsPossibleField = (EditText) view.findViewById(R.id.assignment_points_possible_edit_text);
+
+        //References to the buttons
         mAssignmentButton = (Button) view.findViewById(R.id.universal_assignment_button);
+        mDeleteButton = (Button) view.findViewById(R.id.assignment_delete_button);
 
         //If there is an assignment being passed in:
         if (mAssignment != null){
@@ -101,42 +105,43 @@ public class EditAssignmentFragment extends Fragment {
                     }
                 }
             });
-            //Delete Button to be completed later.
-            //There are still methods to be added to ensure that this works
-            //TODO
-//            mDeleteButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //Do nothing for now
-//                    //Will eventually remove the current course from
-//                    //the array list.
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                    String alertString = getString(R.string.delete_confirmation_string,
-//                            mAssignment.getAssignmentName());
-//                    builder.setTitle(alertString);
-//                    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            mCourse.removeAssignment(mAssignment);
-//                            dialogInterface.dismiss();
-//                            EditAssignmentFragment.this.getActivity().finish();
-//                        }
-//                    });
-//                    builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            //Do nothing and close dialog
-//                            dialogInterface.dismiss();
-//                        }
-//                    });
-//                    AlertDialog dialog = builder.create();
-//                    dialog.show();
-//                }
-//            });
+
+            //When the delete button is pressed do the following:
+            mDeleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Create an alert box confirming the delete action
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    String alertString = getString(R.string.delete_confirmation_string,
+                            mAssignment.getAssignmentName());
+                    builder.setTitle(alertString);
+                    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Remove the assignment from the course
+                            mCourse.removeAssignment(mAssignment);
+                            //Close the dialog box
+                            dialogInterface.dismiss();
+                            //Close the activity hosting the assignment that was just deleted
+                            EditAssignmentFragment.this.getActivity().finish();
+                        }
+                    });
+                    builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        //If the cancel option is selected:
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Do nothing and close dialog
+                            dialogInterface.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
         //If there is no assignment:
         } else {
             //Leave the text views with their default hints.
-            //Set the text of the universal button "Create Assignment"
+            //Set the text of the universal button to "Create Assignment"
             mAssignmentButton.setText(R.string.create_assignment_button_text);
             mAssignmentButton.setOnClickListener(new View.OnClickListener() {
                 //When the universal button is clicked
@@ -163,6 +168,8 @@ public class EditAssignmentFragment extends Fragment {
                     }
                 }
             });
+            //There is no assignment to delete so hide the delete button
+            mDeleteButton.setVisibility(View.GONE);
         }
 
         return view;

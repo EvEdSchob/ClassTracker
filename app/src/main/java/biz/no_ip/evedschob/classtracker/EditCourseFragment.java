@@ -125,7 +125,7 @@ public class EditCourseFragment extends Fragment {
             mDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Create an alert dialog ensuring that this is what they want to do
+                    //Create an alert box confirming the delete action
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     String alertString = getString(R.string.delete_confirmation_string, mCourse.getCourseName());
                     builder.setTitle(alertString);

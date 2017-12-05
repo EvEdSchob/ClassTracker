@@ -1,11 +1,9 @@
 package biz.no_ip.evedschob.classtracker;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DialogTitle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Evan on 11/20/2017.
@@ -152,8 +148,7 @@ public class CourseFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            //Do nothing yet
-            //Will eventually open editable assignment details.
+            //On standard click open activity to edit the assignment.
             Intent intent = EditAssignmentActivity.newIntent(getActivity(),
                     mCourse.getCRN(), mAssignment.getAssignmentId());
             startActivity(intent);
