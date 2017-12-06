@@ -101,11 +101,29 @@
             android:text="Sat"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/time_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkboxes_row2"
+        android:gravity="center">
+        <Button
+            android:id="@+id/start_time_button"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/end_time_button"
+            android:layout_width="0dp"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
     <Button
         android:id="@+id/universal_course_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/checkboxes_row2"/>
+        android:layout_below="@id/time_buttons_layout"/>
     <Button
         android:id="@+id/course_delete_button"
         android:layout_width="match_parent"

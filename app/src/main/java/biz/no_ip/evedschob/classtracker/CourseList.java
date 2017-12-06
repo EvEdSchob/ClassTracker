@@ -39,7 +39,6 @@ public class CourseList {
             addCourse(course);
         }
         //End of Dummy data
-
     }
 
     public void addCourse(Course c) {

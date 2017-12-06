@@ -22,7 +22,7 @@ public class EditCourseFragment extends Fragment {
 
     private static final String ARG_COURSE_ID = "course_id";
 
-    public static EditCourseFragment newInstance(String courseId){
+    public static EditCourseFragment newInstance(String courseId) {
         Bundle args = new Bundle();
 
         args.putString(ARG_COURSE_ID, courseId);
@@ -44,6 +44,8 @@ public class EditCourseFragment extends Fragment {
 
     private Button mUniversalButton;
     private Button mDeleteButton;
+    private Button mStartTimeButton;
+    private Button mEndTimeButton;
 
     private CheckBox[] mCheckBoxes = new CheckBox[6];
 
@@ -53,7 +55,7 @@ public class EditCourseFragment extends Fragment {
 
         String courseId = (String) getArguments().getString(ARG_COURSE_ID);
 
-        if (courseId != null){
+        if (courseId != null) {
             mCourse = CourseList.get(getActivity()).getCourse(courseId);
             mDays = mCourse.getDays();
         }
@@ -73,6 +75,8 @@ public class EditCourseFragment extends Fragment {
         //References to buttons
         mUniversalButton = (Button) view.findViewById(R.id.universal_course_button);
         mDeleteButton = (Button) view.findViewById(R.id.course_delete_button);
+        mStartTimeButton = (Button) view.findViewById(R.id.start_time_button);
+        mEndTimeButton = (Button) view.findViewById(R.id.end_time_button);
 
         //Checkboxes
         mCheckBoxes[0] = (CheckBox) view.findViewById(R.id.course_checkbox_monday);
@@ -83,7 +87,7 @@ public class EditCourseFragment extends Fragment {
         mCheckBoxes[5] = (CheckBox) view.findViewById(R.id.course_checkbox_saturday);
 
         //If there is a course being passed in:
-        if (mCourse != null){
+        if (mCourse != null) {
             //Set the text of the EditTexts to those contained in the view
             mCourseNameField.setText(mCourse.getCourseName());
             mSubjectField.setText(mCourse.getSubject());
@@ -91,7 +95,7 @@ public class EditCourseFragment extends Fragment {
             mCRNField.setText(mCourse.getCRN());
 
             for (int i = 0; i < 5; i++) {
-                if (mDays[i]){
+                if (mDays[i]) {
                     mCheckBoxes[i].setChecked(true);
                 }
             }
@@ -102,20 +106,22 @@ public class EditCourseFragment extends Fragment {
                 public void onClick(View view) {
                     //Update the course based on the input values
                     try {
-                        mCourse.setCourseName(mCourseNameField.getText().toString());
-                        mCourse.setSubject(mSubjectField.getText().toString());
-                        mCourse.setSection(mSectionField.getText().toString());
-                        mCourse.setCRN(mCRNField.getText().toString());
-
-                        for (int i = 0; i < 5; i++){
-                            if (mCheckBoxes[i].isChecked()){
-                                mDays[i] = true;
-                            } else {
-                                mDays[i] = false;
+                        //Validate the input before updating the course
+                        if (validCRN(mCRNField.getText().toString())){
+                            mCourse.setCRN(mCRNField.getText().toString());
+                            mCourse.setCourseName(mCourseNameField.getText().toString());
+                            mCourse.setSubject(mSubjectField.getText().toString());
+                            mCourse.setSection(mSectionField.getText().toString());
+                            for (int i = 0; i < 5; i++) {
+                                if (mCheckBoxes[i].isChecked()) {
+                                    mDays[i] = true;
+                                } else {
+                                    mDays[i] = false;
+                                }
                             }
+                            EditCourseFragment.this.getActivity().finish();
                         }
-                        EditCourseFragment.this.getActivity().finish();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -153,35 +159,36 @@ public class EditCourseFragment extends Fragment {
                     dialog.show();
                 }
             });
-        //If there is no course:
+            //If there is no course:
         } else {
             //Leave the text views with their default hints
-            //Set the text of the universal button to "Add Course"
+            //Set the text of the time buttons to the default from the strings
+            mStartTimeButton.setText(R.string.course_start_time_button_label);
+            mEndTimeButton.setText(R.string.course_end_time_button_label);
+            //Set the text of the universal button to the default from the strings
             mUniversalButton.setText(R.string.create_course_button_text);
             mUniversalButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Create a new course and add it to the list.
-                    String crn;
-                    String sub;
-                    String sec;
-                    String name;
-                    boolean[] days = new boolean[6];
                     //Parse the values from the layout controls
                     try {
-                        crn = mCRNField.getText().toString();
-                        sub = mSubjectField.getText().toString();
-                        sec = mSectionField.getText().toString();
-                        name = mCourseNameField.getText().toString();
-                        for (int i = 0; i < 5; i++){
-                            if (mCheckBoxes[i].isChecked()){
+                        String crn = mCRNField.getText().toString();
+                        String sub = mSubjectField.getText().toString();
+                        String sec = mSectionField.getText().toString();
+                        String name = mCourseNameField.getText().toString();
+                        boolean[] days = new boolean[6];
+                        for (int i = 0; i < 5; i++) {
+                            if (mCheckBoxes[i].isChecked()) {
                                 days[i] = true;
                             }
                         }
-                        Course course = new Course(crn, sub, sec, name, days);
-                        CourseList.get(getContext()).addCourse(course);
-                        EditCourseFragment.this.getActivity().finish();
-                    }catch (Exception e) {
+                        //Ensure that the CRN field is not left blank
+                        if (validCRN(crn)) {
+                            Course course = new Course(crn, sub, sec, name, days);
+                            CourseList.get(getContext()).addCourse(course);
+                            EditCourseFragment.this.getActivity().finish();
+                        }
+                    } catch (Exception e) {
                         Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -191,5 +198,26 @@ public class EditCourseFragment extends Fragment {
         }
 
         return view;
+    }
+
+    //Boolean method to validate the CRN field input
+    private boolean validCRN(String crn){
+        //Check to make sure the CRN/ID field is not empty
+        if (mCRNField.length() != 0) {
+            //Ensure that there is no duplicate CRN
+            if (CourseList.get(getActivity()).getCourse(crn) == null){
+                return true;
+            } else {
+                //If there is a duplicate, Toast an error message
+                Toast.makeText(getActivity(),
+                        R.string.duplicate_crn_error_string, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } else {
+            //If the field is empty, Toast an error message
+            Toast.makeText(getActivity(),
+                    R.string.empty_crn_error_string, Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }

@@ -32,10 +32,14 @@
     <string name="course_subj_edit_text_hint">Subject:</string>
     <string name="course_sect_edit_text_hint">Section:</string>
     <string name="course_id_edit_text_hint">Course ID/CRN:</string>
+    <string name="course_start_time_button_label">Start Time</string>
+    <string name="course_end_time_button_label">End Time</string>
     <string name="create_course_button_text">Add Course</string>
     <string name="edit_course_button_text">Update Course</string>
     <string name="delete_course_button_text">Delete Course</string>
 
     <string name="delete_confirmation_string">Are you sure you want to delete %1$s?</string>
+    <string name="empty_crn_error_string">Missing CRN/ID! Course not added/updated.</string>
+    <string name="duplicate_crn_error_string">Duplicate CRN!</string>
     
 </resources>
