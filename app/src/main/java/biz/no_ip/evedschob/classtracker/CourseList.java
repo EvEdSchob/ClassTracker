@@ -53,6 +53,10 @@ public class CourseList {
         return mCourses;
     }
 
+    public void setCourses(List<Course> courses) {
+        mCourses = courses;
+    }
+
     public Course getCourse(String CRN){
         for (Course course : mCourses) {
             if (course.getCRN().equals(CRN)){

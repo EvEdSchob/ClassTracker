@@ -88,130 +88,147 @@ public class EditCourseFragment extends Fragment {
 
         //If there is a course being passed in:
         if (mCourse != null) {
-            //Set the text of the EditTexts to those contained in the view
-            mCourseNameField.setText(mCourse.getCourseName());
-            mSubjectField.setText(mCourse.getSubject());
-            mSectionField.setText(mCourse.getSection());
-            mCRNField.setText(mCourse.getCRN());
+            //Call the method for updating the course
+            courseViewUpdate();
 
-            for (int i = 0; i < 5; i++) {
-                if (mDays[i]) {
-                    mCheckBoxes[i].setChecked(true);
-                }
-            }
-
-            mUniversalButton.setText(R.string.edit_course_button_text);
-            mUniversalButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Update the course based on the input values
-                    try {
-                        //Validate the input before updating the course
-                        if (validCRN(mCRNField.getText().toString())){
-                            mCourse.setCRN(mCRNField.getText().toString());
-                            mCourse.setCourseName(mCourseNameField.getText().toString());
-                            mCourse.setSubject(mSubjectField.getText().toString());
-                            mCourse.setSection(mSectionField.getText().toString());
-                            for (int i = 0; i < 5; i++) {
-                                if (mCheckBoxes[i].isChecked()) {
-                                    mDays[i] = true;
-                                } else {
-                                    mDays[i] = false;
-                                }
-                            }
-                            EditCourseFragment.this.getActivity().finish();
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            //Set the OnClickListener for the Delete button
-            mDeleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Create an alert box confirming the delete action
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    String alertString = getString(R.string.delete_confirmation_string, mCourse.getCourseName());
-                    builder.setTitle(alertString);
-                    builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        //If the user clicks the confirm button
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //Tell the course list to remove the course
-                            CourseList.get(getActivity()).removeCourse(mCourse);
-                            //Close the dialog box.
-                            dialogInterface.dismiss();
-                            //Close the activity hosting the course that was just deleted
-                            EditCourseFragment.this.getActivity().finish();
-                        }
-                    });
-                    builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        //If the user clicks the cancel button
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //Do nothing and close dialog
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            });
             //If there is no course:
         } else {
-            //Leave the text views with their default hints
-            //Set the text of the time buttons to the default from the strings
-            mStartTimeButton.setText(R.string.course_start_time_button_label);
-            mEndTimeButton.setText(R.string.course_end_time_button_label);
-            //Set the text of the universal button to the default from the strings
-            mUniversalButton.setText(R.string.create_course_button_text);
-            mUniversalButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Parse the values from the layout controls
-                    try {
-                        String crn = mCRNField.getText().toString();
-                        String sub = mSubjectField.getText().toString();
-                        String sec = mSectionField.getText().toString();
-                        String name = mCourseNameField.getText().toString();
-                        boolean[] days = new boolean[6];
-                        for (int i = 0; i < 5; i++) {
-                            if (mCheckBoxes[i].isChecked()) {
-                                days[i] = true;
-                            }
-                        }
-                        //Ensure that the CRN field is not left blank
-                        if (validCRN(crn)) {
-                            Course course = new Course(crn, sub, sec, name, days);
-                            CourseList.get(getContext()).addCourse(course);
-                            EditCourseFragment.this.getActivity().finish();
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            //There is no course to delete at this point so hide the delete button.
-            mDeleteButton.setVisibility(View.GONE);
+            //Call the method for creating a new course
+            courseViewCreate();
         }
 
         return view;
     }
 
+    private void courseViewCreate() {
+        //Leave the text views with their default hints
+        //Set the text of the time buttons to the default from the strings
+        mStartTimeButton.setText(R.string.course_start_time_button_label);
+        mEndTimeButton.setText(R.string.course_end_time_button_label);
+        //Set the text of the universal button to the default from the strings
+        mUniversalButton.setText(R.string.create_course_button_text);
+        mUniversalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Parse the values from the layout controls
+                try {
+                    String crn = mCRNField.getText().toString();
+                    String sub = mSubjectField.getText().toString();
+                    String sec = mSectionField.getText().toString();
+                    String name = mCourseNameField.getText().toString();
+                    boolean[] days = new boolean[6];
+                    for (int i = 0; i < 5; i++) {
+                        if (mCheckBoxes[i].isChecked()) {
+                            days[i] = true;
+                        }
+                    }
+                    //Ensure that the CRN field is not left blank
+                    if (validInputCRN(crn)) {
+                        Course course = new Course(crn, sub, sec, name, days);
+                        CourseList.get(getContext()).addCourse(course);
+                        EditCourseFragment.this.getActivity().finish();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //There is no course to delete at this point so hide the delete button.
+        mDeleteButton.setVisibility(View.GONE);
+    }
+
+    private void courseViewUpdate() {
+        //Set the text of the EditTexts to those contained in the view
+        mCourseNameField.setText(mCourse.getCourseName());
+        mSubjectField.setText(mCourse.getSubject());
+        mSectionField.setText(mCourse.getSection());
+        mCRNField.setText(mCourse.getCRN());
+
+        for (int i = 0; i < 5; i++) {
+            if (mDays[i]) {
+                mCheckBoxes[i].setChecked(true);
+            }
+        }
+
+        mUniversalButton.setText(R.string.edit_course_button_text);
+        mUniversalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Update the course based on the input values
+                try {
+                    //Validate the input before updating the course
+                    if (validInputCRN(mCRNField.getText().toString())) {
+                        mCourse.setCRN(mCRNField.getText().toString());
+                        mCourse.setCourseName(mCourseNameField.getText().toString());
+                        mCourse.setSubject(mSubjectField.getText().toString());
+                        mCourse.setSection(mSectionField.getText().toString());
+                        for (int i = 0; i < 5; i++) {
+                            if (mCheckBoxes[i].isChecked()) {
+                                mDays[i] = true;
+                            } else {
+                                mDays[i] = false;
+                            }
+                        }
+                        EditCourseFragment.this.getActivity().finish();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //Set the OnClickListener for the Delete button
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Create an alert box confirming the delete action
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                String alertString = getString(R.string.delete_confirmation_string, mCourse.getCourseName());
+                builder.setTitle(alertString);
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    //If the user clicks the confirm button
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Tell the course list to remove the course
+                        CourseList.get(getActivity()).removeCourse(mCourse);
+                        //Close the dialog box.
+                        dialogInterface.dismiss();
+                        //Close the activity hosting the course that was just deleted
+                        EditCourseFragment.this.getActivity().finish();
+                    }
+                });
+                builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    //If the user clicks the cancel button
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Do nothing and close dialog
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
+
     //Boolean method to validate the CRN field input
-    private boolean validCRN(String crn){
+    private boolean validInputCRN(String crn) {
         //Check to make sure the CRN/ID field is not empty
         if (mCRNField.length() != 0) {
-            //Ensure that there is no duplicate CRN
-            if (CourseList.get(getActivity()).getCourse(crn) == null){
-                return true;
+            //See if there is an existing course with that CRN
+            if (CourseList.get(getActivity()).getCourse(crn) != null) {
+                //If there is a duplicate, see if it is the currently open course
+                if(crn.equals(mCourse.getCRN())){
+                    return true;
+                } else {
+                    //If the duplicate is not the current course throw an error.
+                    Toast.makeText(getActivity(),
+                            R.string.duplicate_crn_error_string, Toast.LENGTH_SHORT).show();
+                    return false;
+                }
             } else {
-                //If there is a duplicate, Toast an error message
-                Toast.makeText(getActivity(),
-                        R.string.duplicate_crn_error_string, Toast.LENGTH_SHORT).show();
-                return false;
+                //If there is no course with the input CRN return true
+                return true;
             }
         } else {
             //If the field is empty, Toast an error message

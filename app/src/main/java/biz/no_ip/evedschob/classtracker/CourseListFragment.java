@@ -1,11 +1,14 @@
 package biz.no_ip.evedschob.classtracker;
 
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Evan on 11/20/2017.
@@ -30,7 +43,25 @@ public class CourseListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+//        Scanner courseListScanner = new Scanner(getContext()
+//                .getResources().openRawResource(R.raw.course_list));
+//        //Get the first line of the course list file
+//        String line = courseListScanner.nextLine();
+//        //If the first line of the course list file is not empty
+//        if (!line.isEmpty()){
+//            //Create a Type using the TypeToken to define a java object with an
+//            //array/list as its root object
+//            Type founderListType = new TypeToken<ArrayList<Course>>() {}.getType();
+//            //Use GSON, with the JSON string and the type from the previous
+//            //step to recreate the CourseList as a new List object.
+//            List<Course> courses = new Gson().fromJson(line, founderListType);
+//            //Pass that newly created list back to the CourseList
+//            //Replacing the original dummy data
+//            CourseList.get(getActivity()).setCourses(courses);
+//        }
+
     }
+
 
     @Nullable
     @Override
@@ -44,6 +75,23 @@ public class CourseListFragment extends Fragment {
 
 
         updateUI();
+
+        //**************************
+        //Testing
+        //**************************
+
+        //Use the dummy data contained in the CourseList to create a JSON string
+        String json = new Gson().toJson(CourseList.get(getActivity()).getCourses());
+
+        //Create a Type using the TypeToken to define a java object with an
+        //array/list as its root object
+        Type founderListType = new TypeToken<ArrayList<Course>>(){}.getType();
+        //Use GSON, with the JSON string and the type from the previous
+        //step to recreate the CourseList as a new List object.
+        List<Course> courses = new Gson().fromJson(json, founderListType);
+        //Pass that newly created list back to the CourseList
+        //Replacing the original dummy data
+        CourseList.get(getActivity()).setCourses(courses);
 
         return view;
     }
@@ -160,7 +208,7 @@ public class CourseListFragment extends Fragment {
     private class ClassAdapter extends RecyclerView.Adapter<CourseHolder> {
         private List<Course> mCourses;
 
-        public ClassAdapter(List<Course> courses){
+        public ClassAdapter(List<Course> courses) {
             mCourses = courses;
         }
 
