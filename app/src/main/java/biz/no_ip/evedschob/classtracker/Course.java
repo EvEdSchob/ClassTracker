@@ -31,11 +31,11 @@ public class Course {
         mDays = days;
 
         //Dummy Assignments to be removed later
-        for (int j = 0; j < 16; j++) {
-            String aName = "Assignment #" + String.valueOf(j);
-            Assignment assignment = new Assignment(aName, 85 + j, 100);
-            addAssignment(assignment);
-        }
+//        for (int j = 0; j < 16; j++) {
+//            String aName = "Assignment #" + String.valueOf(j);
+//            Assignment assignment = new Assignment(aName, 85 + j, 100);
+//            addAssignment(assignment);
+//        }
         //End of dummy data
 
         mGrade = calculateGrade(mAssignmentList.getCoursePercentage());
