@@ -30,21 +30,12 @@ public class Course {
         mCourseName = name;
         mDays = days;
 
-        //Dummy Assignments to be removed later
-//        for (int j = 0; j < 16; j++) {
-//            String aName = "Assignment #" + String.valueOf(j);
-//            Assignment assignment = new Assignment(aName, 85 + j, 100);
-//            addAssignment(assignment);
-//        }
-        //End of dummy data
-
         mGrade = calculateGrade(mAssignmentList.getCoursePercentage());
     }
 
     //*****************************
     //Private Methods
     //*****************************
-
     private double calculateGrade(double percent) {
         if (percent >= 90) {mGrade = 4.0;
         } else if (percent >= 85) {mGrade = 3.5;
@@ -109,7 +100,6 @@ public class Course {
     //*****************************
     //Getters & Setters
     //*****************************
-
     public String getCRN() {
         return mCRN;
     }

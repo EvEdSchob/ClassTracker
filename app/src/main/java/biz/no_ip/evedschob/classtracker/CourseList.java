@@ -24,21 +24,6 @@ public class CourseList {
 
     private CourseList(Context context) {
         mCourses = new ArrayList<>();
-
-        //Dummy courses to be removed later
-//        for (int i = 0; i < 5; i++) {
-//            int CRN = 12345 + i;
-//            String SUBJ = "MATH";
-//            int SEC = 101 + (i * 10);
-//            int Num = i + 1;
-//            String courseName = "Calculus " + String.valueOf(Num);
-//            boolean[] days = {false, true, false, true, false, false};
-//
-//            Course course = new Course(String.valueOf(CRN), SUBJ,
-//                    String.valueOf(SEC), courseName, days);
-//            addCourse(course);
-//        }
-        //End of Dummy data
     }
 
     public void addCourse(Course c) {
