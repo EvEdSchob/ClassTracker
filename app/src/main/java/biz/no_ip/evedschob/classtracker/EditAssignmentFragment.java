@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import java.util.UUID;
 
+import static biz.no_ip.evedschob.classtracker.CoursePreferencesManager.updatePreferences;
+
 /**
  * Created by Evan on 11/28/2017.
  */
@@ -98,6 +100,8 @@ public class EditAssignmentFragment extends Fragment {
                                 mPointsPossibleField.getText().toString()));
                         //Update the course with the new assignment values
                         mCourse.updateCourse();
+                        //Update the SharedPreferences
+                        updatePreferences(getContext());
                         //Close the activity
                         EditAssignmentFragment.this.getActivity().finish();
                     } catch (Exception e){
@@ -120,6 +124,8 @@ public class EditAssignmentFragment extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //Remove the assignment from the course
                             mCourse.removeAssignment(mAssignment);
+                            //Update the SharedPreferences
+                            updatePreferences(getContext());
                             //Close the dialog box
                             dialogInterface.dismiss();
                             //Close the activity hosting the assignment that was just deleted
@@ -161,6 +167,8 @@ public class EditAssignmentFragment extends Fragment {
                         Assignment assignment = new Assignment(title, pe, pp);
                         //Add the assignment to the course
                         mCourse.addAssignment(assignment);
+                        //Update the SharedPreferences
+                        updatePreferences(getContext());
                         //Close the activity
                         EditAssignmentFragment.this.getActivity().finish();
                     } catch (Exception e) {

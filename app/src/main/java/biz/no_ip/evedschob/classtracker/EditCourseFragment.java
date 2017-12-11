@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import static biz.no_ip.evedschob.classtracker.CoursePreferencesManager.updatePreferences;
+
 
 /**
  * Created by Evan on 11/20/2017.
@@ -88,8 +90,8 @@ public class EditCourseFragment extends Fragment {
 
         //If there is a course being passed in:
         if (mCourse != null) {
-            //Call the method for updating the course
-            courseViewUpdate();
+            //Call the method for updating/deleting the course
+            courseViewEdit();
 
             //If there is no course:
         } else {
@@ -124,8 +126,13 @@ public class EditCourseFragment extends Fragment {
                     }
                     //Ensure that the CRN field is not left blank
                     if (validInputCRN(crn)) {
+                        //Create a new course
                         Course course = new Course(crn, sub, sec, name, days);
+                        //Add it to the CourseList
                         CourseList.get(getContext()).addCourse(course);
+                        //Update the SharedPreferences
+                        updatePreferences(getContext());
+                        //Exit the activity
                         EditCourseFragment.this.getActivity().finish();
                     }
                 } catch (Exception e) {
@@ -137,7 +144,7 @@ public class EditCourseFragment extends Fragment {
         mDeleteButton.setVisibility(View.GONE);
     }
 
-    private void courseViewUpdate() {
+    private void courseViewEdit() {
         //Set the text of the EditTexts to those contained in the view
         mCourseNameField.setText(mCourse.getCourseName());
         mSubjectField.setText(mCourse.getSubject());
@@ -158,6 +165,7 @@ public class EditCourseFragment extends Fragment {
                 try {
                     //Validate the input before updating the course
                     if (validInputCRN(mCRNField.getText().toString())) {
+                        //Pull the values from the views and update the course
                         mCourse.setCRN(mCRNField.getText().toString());
                         mCourse.setCourseName(mCourseNameField.getText().toString());
                         mCourse.setSubject(mSubjectField.getText().toString());
@@ -169,6 +177,9 @@ public class EditCourseFragment extends Fragment {
                                 mDays[i] = false;
                             }
                         }
+                        //Update the preferences
+                        updatePreferences(getContext());
+                        //Close the fragment and return to the course list
                         EditCourseFragment.this.getActivity().finish();
                     }
                 } catch (Exception e) {
@@ -191,6 +202,8 @@ public class EditCourseFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Tell the course list to remove the course
                         CourseList.get(getActivity()).removeCourse(mCourse);
+                        //Update the SharedPreferences
+                        updatePreferences(getContext());
                         //Close the dialog box.
                         dialogInterface.dismiss();
                         //Close the activity hosting the course that was just deleted

@@ -41,31 +41,31 @@ public class CourseListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor editor = mPreferences.edit();
-
-        //Use the shared mPreferences to see if this block of code has been run before.
-        //If not, import the dummy data from the JSON file.
-        //Open a shared preferences editor, and set the "firstTime" value to true.
-        //This will prevent the code from running on all future sessions of this app.
-        if (!mPreferences.getBoolean("firstTime", false)) {
-            importJSON();
-            editor.putBoolean("firstTime", true).apply();
-        } else {
-            String json = mPreferences.getString("jsonData", null);
-            if (json != null){
-                //Create a Type using the TypeToken to define a java object with an
-                //array/list as its root object
-                Type founderListType = new TypeToken<ArrayList<Course>>(){}.getType();
-                //Use GSON, with the JSON string and the type from the previous
-                //step to recreate the CourseList as a new List object.
-                List<Course> courses = new Gson().fromJson(json, founderListType);
-                //Pass that newly created list back to the CourseList
-                //Replacing the original dummy data
-                CourseList.get(getActivity()).setCourses(courses);
-            }
-        }
+        CoursePreferencesManager.startUp(getContext());
+//        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        SharedPreferences.Editor editor = mPreferences.edit();
+//
+//        //Use the shared mPreferences to see if this block of code has been run before.
+//        //If not, import the dummy data from the JSON file.
+//        //Open a shared preferences editor, and set the "firstTime" value to true.
+//        //This will prevent the code from running on all future sessions of this app.
+//        if (!mPreferences.getBoolean("firstTime", false)) {
+//            importJSON();
+//            editor.putBoolean("firstTime", true).apply();
+//        } else {
+//            String json = mPreferences.getString("jsonData", null);
+//            if (json != null){
+//                //Create a Type using the TypeToken to define a java object with an
+//                //array/list as its root object
+//                Type founderListType = new TypeToken<ArrayList<Course>>(){}.getType();
+//                //Use GSON, with the JSON string and the type from the previous
+//                //step to recreate the CourseList as a new List object.
+//                List<Course> courses = new Gson().fromJson(json, founderListType);
+//                //Pass that newly created list back to the CourseList
+//                //Replacing the original dummy data
+//                CourseList.get(getActivity()).setCourses(courses);
+//            }
+//        }
     }
 
 
@@ -105,21 +105,20 @@ public class CourseListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        updatePreferences();
+        CoursePreferencesManager.updatePreferences(getActivity());
     }
 
-    private void updatePreferences() {
-        Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
-        String json = gson.toJson(CourseList.get(getActivity()).getCourses());
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString("jsonData", json).apply();
-    }
+//    private void updatePreferences() {
+//        Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
+//        String json = gson.toJson(CourseList.get(getActivity()).getCourses());
+//        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        SharedPreferences.Editor editor = mPreferences.edit();
+//        editor.putString("jsonData", json).apply();
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        updatePreferences();
         updateUI();
     }
 
@@ -154,29 +153,29 @@ public class CourseListFragment extends Fragment {
 
 
     //Method using a scanner to read in a JSON file from the raw resources
-    private void importJSON() {
-        Scanner courseListScanner = new Scanner(getContext()
-                .getResources().openRawResource(R.raw.course_list));
-
-        //If the first line of the course list file is not empty
-        if (courseListScanner.hasNextLine()) {
-            //Get the first line of the course list file
-            String line = courseListScanner.nextLine();
-            if (!line.isEmpty()) {
-                //Create a Type using the TypeToken to define a java object with an
-                //array/list as its root object
-                Type founderListType = new TypeToken<ArrayList<Course>>() {
-                }.getType();
-                //Use GSON, with the JSON string and the type from the previous
-                //step to recreate the CourseList as a new List object.
-                List<Course> courses = new Gson().fromJson(line, founderListType);
-                //Pass that newly created list back to the CourseList
-                //Replacing the original dummy data
-                CourseList.get(getActivity()).setCourses(courses);
-            }
-        }
-        courseListScanner.close();
-    }
+//    private void importJSON() {
+//        Scanner courseListScanner = new Scanner(getContext()
+//                .getResources().openRawResource(R.raw.course_list));
+//
+//        //If the first line of the course list file is not empty
+//        if (courseListScanner.hasNextLine()) {
+//            //Get the first line of the course list file
+//            String line = courseListScanner.nextLine();
+//            if (!line.isEmpty()) {
+//                //Create a Type using the TypeToken to define a java object with an
+//                //array/list as its root object
+//                Type founderListType = new TypeToken<ArrayList<Course>>() {
+//                }.getType();
+//                //Use GSON, with the JSON string and the type from the previous
+//                //step to recreate the CourseList as a new List object.
+//                List<Course> courses = new Gson().fromJson(line, founderListType);
+//                //Pass that newly created list back to the CourseList
+//                //Replacing the original dummy data
+//                CourseList.get(getActivity()).setCourses(courses);
+//            }
+//        }
+//        courseListScanner.close();
+//    }
 
 
     //*****************************
