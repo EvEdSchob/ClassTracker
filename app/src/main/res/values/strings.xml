@@ -38,8 +38,12 @@
     <string name="edit_course_button_text">Update Course</string>
     <string name="delete_course_button_text">Delete Course</string>
 
+    <!--Error/Alert Strings-->
     <string name="delete_confirmation_string">Are you sure you want to delete %1$s?</string>
     <string name="empty_crn_error_string">Missing CRN/ID! Course not added/updated.</string>
     <string name="duplicate_crn_error_string">Duplicate CRN!</string>
-    
+
+    <!--Time Picker Strings-->
+    <string name="start_time_time_picker_title">Start Time:</string>
+    <string name="end_time_time_picker_title">End Time:</string>
 </resources>

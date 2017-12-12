@@ -84,7 +84,8 @@ public class EditAssignmentFragment extends Fragment {
             mPointsEarnedField.setText(String.valueOf(mAssignment.getPointsEarned()));
             mPointsPossibleField.setText(String.valueOf(mAssignment.getPointsPossible()));
 
-            //Set the text of the universal button "Update Assignment"
+            //Set the text of the universal button to the value
+            //of the string in the resources
             mAssignmentButton.setText(R.string.edit_assignment_button_text);
             mAssignmentButton.setOnClickListener(new View.OnClickListener() {
                 //When the universal button is clicked
@@ -119,6 +120,7 @@ public class EditAssignmentFragment extends Fragment {
                     String alertString = getString(R.string.delete_confirmation_string,
                             mAssignment.getAssignmentName());
                     builder.setTitle(alertString);
+                    //If the action is confirmed
                     builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -132,6 +134,7 @@ public class EditAssignmentFragment extends Fragment {
                             EditAssignmentFragment.this.getActivity().finish();
                         }
                     });
+                    //If the action is rejected
                     builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         //If the cancel option is selected:
                         @Override
@@ -140,14 +143,14 @@ public class EditAssignmentFragment extends Fragment {
                             dialogInterface.dismiss();
                         }
                     });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    builder.create().show();
                 }
             });
         //If there is no assignment:
         } else {
             //Leave the text views with their default hints.
-            //Set the text of the universal button to "Create Assignment"
+            //Set the text of the universal button to the value of
+            //the string in the resources
             mAssignmentButton.setText(R.string.create_assignment_button_text);
             mAssignmentButton.setOnClickListener(new View.OnClickListener() {
                 //When the universal button is clicked

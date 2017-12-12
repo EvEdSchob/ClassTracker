@@ -16,8 +16,8 @@ public class Course {
     private String mSection;
     private String mCourseName;
     private boolean[] mDays;
-    private Time mStartTime;
-    private Time mEndTime;
+    private String mStartTime;
+    private String mEndTime;
 
     private double mGrade;
 
@@ -86,14 +86,12 @@ public class Course {
     }
 
     public String getStartTimeAsString() {
-        //TODO: Add methods to get the real start time
-        //getStartTime().toString();
+        //TODO: Add methods to get the 12-hour start time
         return "6:00";
     }
 
     public String getEndTimeAsString() {
-        //TODO: Add methods to get the real end time
-        //getEndTime().toString();
+        //TODO: Add methods to get the 12-hour end time
         return "8:30";
     }
 
@@ -120,22 +118,6 @@ public class Course {
         return mDays;
     }
 
-    public Time getStartTime() {
-        return mStartTime;
-    }
-
-    public void setStartTime(Time startTime) {
-        mStartTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return mEndTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        mEndTime = endTime;
-    }
-
     public double getGrade() {
         return mGrade;
     }
@@ -154,6 +136,22 @@ public class Course {
 
     public void setCourseName(String courseName) {
         mCourseName = courseName;
+    }
+
+    public String getStartTime() {
+        return mStartTime;
+    }
+
+    public void setStartTime(String startTime) {
+        mStartTime = startTime;
+    }
+
+    public String getEndTime() {
+        return mEndTime;
+    }
+
+    public void setEndTime(String endTime) {
+        mEndTime = endTime;
     }
 
     public void setDays(boolean[] days) {

@@ -1,9 +1,12 @@
 package biz.no_ip.evedschob.classtracker;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 import static biz.no_ip.evedschob.classtracker.CoursePreferencesManager.updatePreferences;
 
@@ -23,6 +28,18 @@ import static biz.no_ip.evedschob.classtracker.CoursePreferencesManager.updatePr
 public class EditCourseFragment extends Fragment {
 
     private static final String ARG_COURSE_ID = "course_id";
+
+    private static final String DIALOG_TIME = "DialogTime";
+
+    //Request codes for the TimePicker
+    //Start Time, New Course
+    private static final int REQUEST_STNC = 1;
+    //End Time, New Course
+    private static final int REQUEST_ETNC = 2;
+    //Start Time, Old Course
+    private static final int REQUEST_STOC = 3;
+    //End Time, Old Course
+    private static final int REQUEST_ETOC = 4;
 
     public static EditCourseFragment newInstance(String courseId) {
         Bundle args = new Bundle();
@@ -38,6 +55,8 @@ public class EditCourseFragment extends Fragment {
 
     private Course mCourse;
     private boolean[] mDays;
+    private String mStartTime;
+    private String mEndTime;
 
     private EditText mCourseNameField;
     private EditText mSubjectField;
@@ -102,11 +121,55 @@ public class EditCourseFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        switch (requestCode) {
+            case 1:
+            case 3:
+                mStartTime = data.getStringExtra(TimePickerFragment.EXTRA_TIME);
+                mStartTimeButton.setText(mStartTime);
+                break;
+            case 2:
+            case 4:
+                mEndTime = data.getStringExtra(TimePickerFragment.EXTRA_TIME);
+                mEndTimeButton.setText(mEndTime);
+                break;
+            default:
+                Toast.makeText(getActivity(), "Invalid Result Request", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void courseViewCreate() {
         //Leave the text views with their default hints
         //Set the text of the time buttons to the default from the strings
         mStartTimeButton.setText(R.string.course_start_time_button_label);
         mEndTimeButton.setText(R.string.course_end_time_button_label);
+
+        mStartTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                //Request code "1" for Start Time, New Class
+                TimePickerFragment dialog = TimePickerFragment.newInstance(REQUEST_STNC);
+                dialog.setTargetFragment(EditCourseFragment.this, REQUEST_STNC);
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
+
+        mEndTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                //Request code "2" for End Time, New Class
+                TimePickerFragment dialog = TimePickerFragment.newInstance(REQUEST_ETNC);
+                dialog.setTargetFragment(EditCourseFragment.this, REQUEST_ETNC);
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
         //Set the text of the universal button to the default from the strings
         mUniversalButton.setText(R.string.create_course_button_text);
         mUniversalButton.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +220,32 @@ public class EditCourseFragment extends Fragment {
             }
         }
 
+        mStartTimeButton.setText(mCourse.getStartTimeAsString());
+        mEndTimeButton.setText(mCourse.getEndTimeAsString());
+        mStartTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                //Request code "3" for Start Time, Old Class
+                TimePickerFragment dialog = TimePickerFragment
+                        .newInstance(REQUEST_STOC, mCourse.getStartTimeAsString());
+                dialog.setTargetFragment(EditCourseFragment.this, REQUEST_STOC);
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
+
+        mEndTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                //Request code "4" for End Time, Old Class
+                TimePickerFragment dialog = TimePickerFragment
+                        .newInstance(REQUEST_ETOC, mCourse.getEndTimeAsString());
+                dialog.setTargetFragment(EditCourseFragment.this, REQUEST_ETOC);
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
+
         mUniversalButton.setText(R.string.edit_course_button_text);
         mUniversalButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +266,7 @@ public class EditCourseFragment extends Fragment {
                                 mDays[i] = false;
                             }
                         }
+                        mCourse.setDays(mDays);
                         //Update the preferences
                         updatePreferences(getContext());
                         //Close the fragment and return to the course list
@@ -196,6 +286,7 @@ public class EditCourseFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 String alertString = getString(R.string.delete_confirmation_string, mCourse.getCourseName());
                 builder.setTitle(alertString);
+                //If the action is confirmed:
                 builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     //If the user clicks the confirm button
                     @Override
@@ -210,6 +301,7 @@ public class EditCourseFragment extends Fragment {
                         EditCourseFragment.this.getActivity().finish();
                     }
                 });
+                //If the action is rejected
                 builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     //If the user clicks the cancel button
                     @Override
@@ -218,20 +310,20 @@ public class EditCourseFragment extends Fragment {
                         dialogInterface.dismiss();
                     }
                 });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                builder.create().show();
             }
         });
     }
 
+
     //Boolean method to validate the CRN field input
     private boolean validInputCRN(String crn) {
         //Check to make sure the CRN/ID field is not empty
-        if (mCRNField.length() != 0) {
+        if (crn.length() != 0) {
             //See if there is an existing course with that CRN
             if (CourseList.get(getActivity()).getCourse(crn) != null) {
                 //If there is a duplicate, see if it is the currently open course
-                if(crn.equals(mCourse.getCRN())){
+                if (crn.equals(mCourse.getCRN())) {
                     return true;
                 } else {
                     //If the duplicate is not the current course throw an error.
