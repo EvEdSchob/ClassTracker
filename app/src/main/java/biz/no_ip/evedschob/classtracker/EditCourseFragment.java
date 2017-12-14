@@ -16,8 +16,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Calendar;
-
 import static biz.no_ip.evedschob.classtracker.CoursePreferencesManager.updatePreferences;
 
 
@@ -131,12 +129,12 @@ public class EditCourseFragment extends Fragment {
             case 1:
             case 3:
                 mStartTime = data.getStringExtra(TimePickerFragment.EXTRA_TIME);
-                mStartTimeButton.setText(mStartTime);
+                mStartTimeButton.setText(Course.getTimeAsFormattedString(mStartTime));
                 break;
             case 2:
             case 4:
                 mEndTime = data.getStringExtra(TimePickerFragment.EXTRA_TIME);
-                mEndTimeButton.setText(mEndTime);
+                mEndTimeButton.setText(Course.getTimeAsFormattedString(mEndTime));
                 break;
             default:
                 Toast.makeText(getActivity(), "Invalid Result Request", Toast.LENGTH_SHORT).show();
@@ -182,21 +180,27 @@ public class EditCourseFragment extends Fragment {
                     String sec = mSectionField.getText().toString();
                     String name = mCourseNameField.getText().toString();
                     boolean[] days = new boolean[6];
-                    for (int i = 0; i < 5; i++) {
+                    for (int i = 0; i < 6; i++) {
                         if (mCheckBoxes[i].isChecked()) {
                             days[i] = true;
                         }
                     }
                     //Ensure that the CRN field is not left blank
                     if (validInputCRN(crn)) {
-                        //Create a new course
-                        Course course = new Course(crn, sub, sec, name, days);
-                        //Add it to the CourseList
-                        CourseList.get(getContext()).addCourse(course);
-                        //Update the SharedPreferences
-                        updatePreferences(getContext());
-                        //Exit the activity
-                        EditCourseFragment.this.getActivity().finish();
+                        if (mStartTime != null || mEndTime != null) {
+                            //Create a new course
+                            Course course = new Course(crn, sub, sec, name,
+                                    days, mStartTime, mEndTime);
+                            //Add it to the CourseList
+                            CourseList.get(getContext()).addCourse(course);
+                            //Update the SharedPreferences
+                            updatePreferences(getContext());
+                            //Exit the activity
+                            EditCourseFragment.this.getActivity().finish();
+                        } else {
+                            Toast.makeText(getContext(), "Please Select Times", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 } catch (Exception e) {
                     Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -214,33 +218,39 @@ public class EditCourseFragment extends Fragment {
         mSectionField.setText(mCourse.getSection());
         mCRNField.setText(mCourse.getCRN());
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             if (mDays[i]) {
                 mCheckBoxes[i].setChecked(true);
             }
         }
 
-        mStartTimeButton.setText(mCourse.getStartTimeAsString());
-        mEndTimeButton.setText(mCourse.getEndTimeAsString());
+        //Set the class level start and end times. That way if the value doesn't change
+        //we can pass them back into the course without having to check if they
+        //have been changed. Using the time buttons will change them automatically.
+        mStartTime = mCourse.getStartTime();
+        mEndTime = mCourse.getEndTime();
+
+        mStartTimeButton.setText(mCourse.getTimeAsFormattedString(mCourse.getStartTime()));
         mStartTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
                 //Request code "3" for Start Time, Old Class
                 TimePickerFragment dialog = TimePickerFragment
-                        .newInstance(REQUEST_STOC, mCourse.getStartTimeAsString());
+                        .newInstance(REQUEST_STOC, mCourse.getStartTime());
                 dialog.setTargetFragment(EditCourseFragment.this, REQUEST_STOC);
                 dialog.show(manager, DIALOG_TIME);
             }
         });
 
+        mEndTimeButton.setText(mCourse.getTimeAsFormattedString(mCourse.getEndTime()));
         mEndTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getFragmentManager();
                 //Request code "4" for End Time, Old Class
                 TimePickerFragment dialog = TimePickerFragment
-                        .newInstance(REQUEST_ETOC, mCourse.getEndTimeAsString());
+                        .newInstance(REQUEST_ETOC, mCourse.getEndTime());
                 dialog.setTargetFragment(EditCourseFragment.this, REQUEST_ETOC);
                 dialog.show(manager, DIALOG_TIME);
             }
@@ -259,7 +269,7 @@ public class EditCourseFragment extends Fragment {
                         mCourse.setCourseName(mCourseNameField.getText().toString());
                         mCourse.setSubject(mSubjectField.getText().toString());
                         mCourse.setSection(mSectionField.getText().toString());
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 6; i++) {
                             if (mCheckBoxes[i].isChecked()) {
                                 mDays[i] = true;
                             } else {
@@ -267,6 +277,8 @@ public class EditCourseFragment extends Fragment {
                             }
                         }
                         mCourse.setDays(mDays);
+                        mCourse.setStartTime(mStartTime);
+                        mCourse.setEndTime(mEndTime);
                         //Update the preferences
                         updatePreferences(getContext());
                         //Close the fragment and return to the course list

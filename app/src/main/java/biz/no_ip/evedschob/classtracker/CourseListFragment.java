@@ -142,7 +142,8 @@ public class CourseListFragment extends Fragment {
             mClassDaysTextView.setText(mCourse.getDaysAsString());
 
             String TimeString = getString(R.string.class_time_format,
-                    mCourse.getStartTimeAsString(), mCourse.getEndTimeAsString());
+                    mCourse.getTimeAsFormattedString(mCourse.getStartTime()),
+                    mCourse.getTimeAsFormattedString(mCourse.getEndTime()));
             mClassTimeTextView.setText(TimeString);
 
             mClassGradeTextView.setText(String.valueOf(mCourse.getGrade()));

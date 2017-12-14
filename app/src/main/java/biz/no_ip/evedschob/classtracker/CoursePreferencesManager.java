@@ -37,6 +37,7 @@ public class CoursePreferencesManager {
         if (mPreferences.getBoolean("firstTime", true)) {
             //If not, import the dummy data from the JSON file.
             importJSON(context);
+            updatePreferences(context);
             //Use the shared preferences editor to set the "firstTime" value to false.
             //This will prevent the code from running on all future sessions of this app.
             mPreferences.edit().putBoolean("firstTime", false).apply();

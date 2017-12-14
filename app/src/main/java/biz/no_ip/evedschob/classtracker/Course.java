@@ -1,6 +1,5 @@
 package biz.no_ip.evedschob.classtracker;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,12 +22,15 @@ public class Course {
 
     private AssignmentList mAssignmentList = new AssignmentList();
 
-    public Course(String crn, String sub, String sec, String name, boolean[] days) {
+    public Course(String crn, String sub, String sec, String name,
+                  boolean[] days, String startTime, String endTime) {
         mCRN = crn;
         mSubject = sub;
         mSection = sec;
         mCourseName = name;
         mDays = days;
+        mStartTime = startTime;
+        mEndTime = endTime;
 
         mGrade = calculateGrade(mAssignmentList.getCoursePercentage());
     }
@@ -85,14 +87,23 @@ public class Course {
         return outputString;
     }
 
-    public String getStartTimeAsString() {
-        //TODO: Add methods to get the 12-hour start time
-        return "6:00";
-    }
+    public static String getTimeAsFormattedString(String time){
+        String[] hourMinute = time.split(":");
+        String AmPm = "AM";
+        String sMinute;
+        int hour = Integer.valueOf(hourMinute[0]);
+        int minute = Integer.valueOf(hourMinute[1]);
+        if (hour > 12 ) {
+            hour = hour - 12;
+            AmPm = "PM";
+        }
+        if (minute == 0){
+            sMinute = "00";
+        } else {
+            sMinute = String.valueOf(minute);
+        }
 
-    public String getEndTimeAsString() {
-        //TODO: Add methods to get the 12-hour end time
-        return "8:30";
+        return String.valueOf(hour + ":" + sMinute + " " + AmPm);
     }
 
     //*****************************
